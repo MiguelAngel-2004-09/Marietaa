@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Cita de San Valentín</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        font-family: Arial, sans-serif;
+        background-color: #ffe6f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .container {
+        position: relative;
+        width: 90%;
+        max-width: 600px;
+        text-align: center;
+        z-index: 10;
+    }
+
+    h1#pregunta {
+        font-size: 1.5em;
+        color: #ff3366;
+        line-height: 1.2;
+        margin-bottom: 1em;
+    }
+
+    button {
+        padding: 0.8em 1.5em;
+        font-size: 1em;
+        margin: 0.5em;
+        cursor: pointer;
+        border-radius: 10px;
+        border: none;
+        position: relative;
+        z-index: 10;
+    }
+
+    #yesBtn { background-color: #ff6699; color: white; }
+    #noBtn { background-color: #cccccc; }
+
+    #mensaje {
+        font-size: 1.2em;
+        color: #ff0033;
+        margin-top: 1em;
+        white-space: pre-line;
+    }
+
+    #corazones {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none; /* No bloquea botones */
+        z-index: 1;
+    }
+
+    .corazon {
+        position: absolute;
+        font-size: 1.5em;
+        animation: caer linear forwards;
+    }
+
+    @keyframes caer {
+        0% { transform: translateY(-2em); opacity: 1; }
+        100% { transform: translateY(110%); opacity: 0; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1 id="pregunta">Hola Marieta,<br>¿Me concederías una cita de San Valentín? 💖</h1>
+    <button id="yesBtn">Sí</button>
+    <button id="noBtn">No</button>
+    <div id="mensaje"></div>
+    <div id="corazones"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const mensaje = document.getElementById('mensaje');
+    const corazonesContainer = document.getElementById('corazones');
+
+    function crearCorazon() {
+        const heart = document.createElement('div');
+        heart.className = 'corazon';
+        heart.textContent = '❤️';
+        heart.style.left = Math.random() * 90 + '%';
+        heart.style.fontSize = (1 + Math.random() * 1) + 'em';
+        heart.style.animationDuration = (2 + Math.random() * 2) + 's';
+        corazonesContainer.appendChild(heart);
+        setTimeout(() => heart.remove(), parseFloat(heart.style.animationDuration) * 1000);
+    }
+
+    yesBtn.addEventListener('click', () => {
+        mensaje.textContent = "¡LO SABÍA!\nMI BEBITO, TE AMO MUCHO, MAÑANA NOS VEMOS! 💖";
+
+        // Lluvia de corazones durante 5 segundos
+        const interval = setInterval(crearCorazon, 200);
+        setTimeout(() => clearInterval(interval), 5000);
+    });
+
+    noBtn.addEventListener('click', () => {
+        // Mover botón a posición aleatoria
+        const x = Math.random() * (window.innerWidth - 80);
+        const y = Math.random() * (window.innerHeight - 50);
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+
+        mensaje.textContent = "¡Pero de qué vas! ¿Quién te crees? ¡Venga, otra oportunidad hombre! 😜";
+    });
+});
+</script>
+</body>
+</html>
